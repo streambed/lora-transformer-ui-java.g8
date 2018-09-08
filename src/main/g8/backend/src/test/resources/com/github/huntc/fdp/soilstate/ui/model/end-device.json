@@ -1,0 +1,16 @@
+[
+  {
+    "activation": "OTA",
+    "appKey": "1234567890ABCDEF1234567890ABCDEF",
+    "devAddr": "12345678",
+    "devEUI": "1234567890ABCDEF",
+    "endDeviceTopic": "some-topic",
+    "joinEUI": "1234567890ABCDEF",
+    "nwkKey": "ABCDEF1234567890ABCDEF1234567890",
+    "position": {
+      "lat": 0,
+      "lng": 0
+    },
+    "version": 1
+  }
+]
