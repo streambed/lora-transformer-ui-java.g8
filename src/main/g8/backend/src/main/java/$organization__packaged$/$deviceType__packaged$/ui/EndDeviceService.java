@@ -1,4 +1,4 @@
-package com.github.huntc.fdp.soilstate.ui;
+package $organization;format="package"$.$deviceType;format="camel"$.ui;
 
 import akka.NotUsed;
 import akka.stream.Materializer;
@@ -27,7 +27,7 @@ class EndDeviceService {
      *
      * To keep the UI sane, we only emit the latest end device events that the UI will be interested in i.e.
      * position and removal. We then continue to emit events that we are able to decrypt, which may, or may
-     * not be related to the soilstate topic. For simplicity sake, while we could continue to event source those,
+     * not be related to the $deviceType$ topic. For simplicity sake, while we could continue to event source those,
      * we let the UI do that as it must anyhow.
      */
     static Source<Tuple2<EndDeviceEvents.Event, Long>, NotUsed> events(DurableQueue durableQueue,

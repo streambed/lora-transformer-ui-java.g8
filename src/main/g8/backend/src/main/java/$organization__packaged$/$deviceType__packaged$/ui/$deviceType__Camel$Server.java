@@ -1,4 +1,4 @@
-package com.github.huntc.fdp.soilstate.ui;
+package $organization;format="package"$.$deviceType;format="camel"$.ui;
 
 import akka.NotUsed;
 import akka.actor.ActorSystem;
@@ -17,8 +17,8 @@ import akka.japi.pf.PFBuilder;
 import akka.stream.Materializer;
 import akka.stream.javadsl.Flow;
 import akka.stream.javadsl.Sink;
-import com.github.huntc.fdp.soilstate.transformer.SoilStateTransformer;
-import com.github.huntc.fdp.soilstate.ui.model.Credentials;
+import $organization;format="package"$.$deviceType;format="camel"$.transformer.$deviceType;format="Camel"$Transformer;
+import $organization;format="package"$.$deviceType;format="camel"$.ui.model.Credentials;
 import com.github.huntc.streambed.Application;
 import com.github.huntc.streambed.ApplicationContext;
 import com.github.huntc.streambed.durablequeue.DurableQueue;
@@ -43,7 +43,7 @@ import java.util.concurrent.CompletionStage;
  * This is our main entry point to the application being responsible for serving assets as well as providings the UI's
  * RESTful endpoints
  */
-public class SoilstateServer extends Application implements DurableQueueProvider, SecretStoreProvider {
+public class $deviceType;format="Camel"$Server extends Application implements DurableQueueProvider, SecretStoreProvider {
 
     @Override
     public void main(String[] args, ApplicationContext context) {
@@ -72,7 +72,7 @@ public class SoilstateServer extends Application implements DurableQueueProvider
         // Start the transformer up as we are running it within the same process
         // It can be factored out into its own process if required.
         Tracer tracer = TracerConfig.tracer(context.config(), context.system());
-        SoilStateTransformer
+        $deviceType;format="Camel"$Transformer
                 .source(context.durableQueue(), Principal.toJava(context.getSecret()), tracer, mat)
                 .runWith(Sink.ignore(), mat);
     }
@@ -98,7 +98,7 @@ public class SoilstateServer extends Application implements DurableQueueProvider
             DurableQueue durableQueue = context.durableQueue();
             UserIdentityService identityService = UserIdentityService.apply(context, system);
 
-            int maxInitialSensors = system.settings().config().getInt("soilstate.max-initial-sensors");
+            int maxInitialSensors = system.settings().config().getInt("$deviceType;format="norm"$.max-initial-sensors");
             return route(
                     path(PathMatchers.segment("api").slash("login"), () ->
                             post(() ->
@@ -129,11 +129,11 @@ public class SoilstateServer extends Application implements DurableQueueProvider
                                                                     .map(t -> ServerSentEventMarshaller.toServerSentEvent(t._1(), t._2()))
                                                                     .keepAlive(Duration.of(10, ChronoUnit.SECONDS), ServerSentEvent::heartbeat),
                                                             EventStreamMarshalling.toEventStream())))),
-                                    path("soilstate", () -> route(
+                                    path("$deviceType;format="norm"$", () -> route(
 
                                             get(() ->
                                                     completeOK(
-                                                            SoilstateService.events(
+                                                            $deviceType;format="Camel"$Service.events(
                                                                     durableQueue,
                                                                     maxInitialSensors,
                                                                     Principal.toJava(principal.getSecret()),
@@ -145,10 +145,6 @@ public class SoilstateServer extends Application implements DurableQueueProvider
                     // Explicitly list out all SPA routes so that refreshing works as expected
 
                     pathEndOrSingleSlash(() -> getFromResource("dist/index.html")),
-
-                    pathPrefix("provision", () -> getFromResource("dist/index.html")),
-
-                    pathPrefix("end-devices", () -> getFromResource("dist/index.html")),
 
                     getFromResourceDirectory("dist")
             ).seal();

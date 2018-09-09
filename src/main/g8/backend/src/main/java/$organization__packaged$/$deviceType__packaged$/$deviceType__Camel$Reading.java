@@ -1,6 +1,4 @@
-package com.github.huntc.fdp.soilstate;
-
-// #domain
+package $organization;format="package"$.$deviceType;format="camel"$;
 
 import akka.NotUsed;
 import akka.stream.ActorAttributes;
@@ -29,27 +27,26 @@ import java.util.concurrent.CompletionStage;
 import java.util.function.Function;
 
 /**
- * Captures a temperature/moisture reading of soil.
+ * Captures a sensor observation.
  */
-public final class SoilStateReading {
-    // #constants
+public final class $deviceType;format="Camel"$Reading {
     /**
      * The topic used to send encrypted domain object data to and consume it from
      */
-    public static final String DATA_UP_JSON_TOPIC = "soilstate-data-up-json";
+    public static final String DATA_UP_JSON_TOPIC = "$deviceType;format="norm"$-data-up-json";
 
     /**
      * The path of the secret to be used for encrypting and decrypting the domain object
      */
-    public static final String KEY_PATH = "secrets.soilstate.key";
-    // #constants
+    public static final String KEY_PATH = "secrets.$deviceType;format="norm"$.key";
 
-    // #json
     public static final ObjectMapper mapper = new ObjectMapper();
     static {
         mapper.registerModule(new JavaTimeModule());
         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
     }
+
+    // FIXME: These fields and its constructor should be as per your sensor
 
     private final Instant time;
 
@@ -60,7 +57,7 @@ public final class SoilStateReading {
     private final BigDecimal moisturePercentage;
 
     @JsonCreator
-    public SoilStateReading(@JsonProperty(value = "time", required = true) Instant time,
+    public $deviceType;format="Camel"$Reading(@JsonProperty(value = "time", required = true) Instant time,
                             @JsonProperty(value = "nwkAddr", required = true) int nwkAddr,
                             @JsonProperty(value = "temperature", required = true) BigDecimal temperature,
                             @JsonProperty(value = "moisturePercentage", required = true) BigDecimal moisturePercentage) {
@@ -69,14 +66,18 @@ public final class SoilStateReading {
         this.temperature = temperature;
         this.moisturePercentage = moisturePercentage;
     }
-    // #json
-
-    // #fromBytes
 
     /**
-     * Construct from raw bytes
+     * Construct from a decrypted LoRaWAN ConfirmedDataUp/UnconfirmedDataUp FRMPayload
+     *
+     * FIXME: The following example assumes a soil moisture/temperature sensors with 4 bytes.
+     * The first 2 bytes are the temperature in Celsuis and 400 added to it (for fun).
+     * The second 2 bytes represent the moisture as a percentage.
+     *
+     * You should change this function to decode your LoRaWAN payload from its byte
+     * representation.
      */
-    public SoilStateReading(Instant time, int nwkAddr, byte[] payload) {
+    public $deviceType;format="Camel"$Reading(Instant time, int nwkAddr, byte[] payload) {
         this.time = time;
         this.nwkAddr = nwkAddr;
         if (payload.length >= 4) {
@@ -91,7 +92,6 @@ public final class SoilStateReading {
             this.moisturePercentage = BigDecimal.ZERO;
         }
     }
-    // #fromBytes
 
     public Instant getTime() {
         return time;
@@ -113,7 +113,7 @@ public final class SoilStateReading {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SoilStateReading that = (SoilStateReading) o;
+        $deviceType;format="Camel"$Reading that = ($deviceType;format="Camel"$Reading) o;
         return nwkAddr == that.nwkAddr &&
                 Objects.equals(time, that.time) &&
                 Objects.equals(temperature, that.temperature) &&
@@ -127,7 +127,7 @@ public final class SoilStateReading {
 
     @Override
     public String toString() {
-        return "SoilStateReading{" +
+        return "$deviceType;format="Camel"$Reading{" +
                 "time=" + time +
                 ", nwkAddr=" + nwkAddr +
                 ", temperature=" + temperature +
@@ -139,12 +139,12 @@ public final class SoilStateReading {
      * A convenience function for encoding an reading, encrypting it and then
      * publishing it to a queue.
      */
-    public static Flow<SoilStateReading, DurableQueue.CommandRequest<Object>, NotUsed>
+    public static Flow<$deviceType;format="Camel"$Reading, DurableQueue.CommandRequest<Object>, NotUsed>
     appender(
             Function<String, CompletionStage<Either<Principal.FailureResponse, Principal.SecretRetrieved>>> getSecret,
             ExecutionContext ec
     ) {
-        return Flow.<SoilStateReading>create()
+        return Flow.<$deviceType;format="Camel"$Reading>create()
                 .map(e -> new Tuple2<>(e.getNwkAddr(), ByteString.fromString(mapper.writeValueAsString(e))))
                 .map(e -> {
                     int nwkAddr = e._1();
@@ -159,7 +159,7 @@ public final class SoilStateReading {
                             new DurableQueue.Send(
                                     nwkAddr,
                                     bytes,
-                                    SoilStateReading.DATA_UP_JSON_TOPIC,
+                                    $deviceType;format="Camel"$Reading.DATA_UP_JSON_TOPIC,
                                     DurableQueue.EmptyHeaders()),
                             Option.empty());
                 });
@@ -168,7 +168,7 @@ public final class SoilStateReading {
     /**
      * Conveniently tail, decrypt and decode readings. Yields the reading and its offset.
      */
-    public static Flow<DurableQueue.Received, Tuple2<SoilStateReading, Long>, NotUsed>
+    public static Flow<DurableQueue.Received, Tuple2<$deviceType;format="Camel"$Reading, Long>, NotUsed>
     tailer(Function<String, CompletionStage<Either<Principal.FailureResponse, Principal.SecretRetrieved>>> getSecret,
            ExecutionContext ec) {
         return Flow.<DurableQueue.Received>create()
@@ -181,7 +181,7 @@ public final class SoilStateReading {
                 .map(e -> {
                     ByteString data = e._1();
                     long o = e._2();
-                    return new Tuple2<>(mapper.readValue(data.toArray(), SoilStateReading.class), o);
+                    return new Tuple2<>(mapper.readValue(data.toArray(), $deviceType;format="Camel"$Reading.class), o);
                 })
                 .withAttributes(ActorAttributes.withSupervisionStrategy(Supervision.getResumingDecider()));
     }

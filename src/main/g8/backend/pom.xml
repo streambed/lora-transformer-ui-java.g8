@@ -4,11 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.huntc</groupId>
-    <artifactId>fdp-soilstate-ui</artifactId>
+    <groupId>$organization;format="package"$</groupId>
+    <artifactId>$name;format="norm"$</artifactId>
 
     <properties>
-        <main-class>com.github.huntc.fdp.soilstate.ui.SoilstateServerEntryPoints</main-class>
+        <main-class>$organization;format="package"$.$deviceType;format="camel"$.ui.$deviceType;format="Camel"$ServerEntryPoints</main-class>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.version>0.1.0-SNAPSHOT</project.version>
@@ -103,8 +103,7 @@
                           </assembly>
                           <from>farmco/iox-landlord:\${versions.ioxLandlord}</from>
                           <labels>
-                            <cisco.info.name>fdpsoilstateui</cisco.info.name>
-                            <cisco.env.JAVA_OPTS>"-Dstreambed.http-server.bind.port=9871"</cisco.env.JAVA_OPTS>
+                            <cisco.info.name>$deviceType;format="word"$ui</cisco.info.name>
                           </labels>
                           <cmd>
                             <exec>

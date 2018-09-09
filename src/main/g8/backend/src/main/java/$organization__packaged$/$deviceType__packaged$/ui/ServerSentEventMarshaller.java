@@ -1,8 +1,8 @@
-package com.github.huntc.fdp.soilstate.ui;
+package $organization;format="package"$.$deviceType;format="camel"$.ui;
 
 import akka.http.javadsl.model.sse.ServerSentEvent;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.github.huntc.fdp.soilstate.SoilStateReading;
+import $organization;format="package"$.$deviceType;format="camel"$.$deviceType;format="Camel"$Reading;
 import com.github.huntc.lora.controlplane.EndDeviceEvents;
 import spray.json.SerializationException;
 
@@ -23,9 +23,9 @@ class ServerSentEventMarshaller {
         }
     }
 
-    static ServerSentEvent toServerSentEvent(SoilStateReading reading, Long offset) throws JsonProcessingException {
+    static ServerSentEvent toServerSentEvent($deviceType;format="Camel"$Reading reading, Long offset) throws JsonProcessingException {
         return ServerSentEvent.create(
-                SoilStateReading.mapper.writeValueAsString(reading),
+                $deviceType;format="Camel"$Reading.mapper.writeValueAsString(reading),
                 reading.getClass().getSimpleName(),
                 offset.toString());
     }

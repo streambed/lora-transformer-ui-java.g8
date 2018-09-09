@@ -1,8 +1,8 @@
-package com.github.huntc.fdp.soilstate.ui;
+package $organization;format="package"$.$deviceType;format="camel"$.ui;
 
 import akka.http.javadsl.model.sse.ServerSentEvent;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.github.huntc.fdp.soilstate.SoilStateReading;
+import $organization;format="package"$.$deviceType;format="camel"$.$deviceType;format="Camel"$Reading;
 import com.github.huntc.lora.controlplane.EndDeviceEvents;
 import com.github.huntc.lora.packet.FCnt;
 import org.junit.Test;
@@ -94,18 +94,18 @@ public class ServerSentEventMarshallerTest {
     }
 
     @Test
-    public void soilStateEvents() throws JsonProcessingException {
+    public void $deviceType;format="camel"$Events() throws JsonProcessingException {
 
         assertEqualsSse(
                 ServerSentEventMarshaller.toServerSentEvent(
-                        new SoilStateReading(
+                        new $deviceType;format="Camel"$Reading(
                                 Instant.EPOCH,
                                 1,
                                 BigDecimal.valueOf(1),
                                 BigDecimal.valueOf(2)),
                         1L),
                 "{\"nwkAddr\":1,\"time\":\"1970-01-01T00:00:00Z\",\"temperature\":1,\"moisturePercentage\":2}",
-                "SoilStateReading",
+                "$deviceType;format="Camel"$Reading",
                 "1"
         );
     }

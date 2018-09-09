@@ -1,4 +1,4 @@
-package com.github.huntc.fdp.soilstate.ui.model;
+package $organization;format="package"$.$deviceType;format="camel"$.ui.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

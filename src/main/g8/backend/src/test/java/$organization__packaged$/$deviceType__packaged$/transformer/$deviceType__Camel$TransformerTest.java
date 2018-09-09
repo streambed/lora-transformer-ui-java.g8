@@ -1,4 +1,4 @@
-package com.github.huntc.fdp.soilstate.transformer;
+package $organization;format="package"$.$deviceType;format="camel"$.transformer;
 
 import akka.actor.ActorSystem;
 import akka.stream.ActorMaterializer;
@@ -7,7 +7,7 @@ import akka.stream.javadsl.Sink;
 import akka.stream.javadsl.Source;
 import akka.testkit.javadsl.TestKit;
 import akka.util.ByteString;
-import com.github.huntc.fdp.soilstate.SoilStateReading;
+import $organization;format="package"$.$deviceType;format="camel"$.$deviceType;format="Camel"$Reading;
 import com.github.huntc.streambed.durablequeue.DurableQueue;
 import com.github.huntc.streambed.identity.Principal;
 import com.github.huntc.streambed.testkit.durablequeue.InMemoryQueue\$;
@@ -35,7 +35,7 @@ import static com.github.huntc.streambed.HexString.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class SoilStateTransformerTest {
+public class $deviceType;format="Camel"$TransformerTest {
 
     private static ActorSystem system;
     private static Materializer mat;
@@ -64,7 +64,7 @@ public class SoilStateTransformerTest {
         NoopTracer tracer = NoopTracerFactory.create();
 
         // Kick off the transformer
-        SoilStateTransformer
+        $deviceType;format="Camel"$Transformer
                 .source(durableQueue, getSecret, tracer, mat)
                 .runWith(Sink.ignore(), mat);
 
@@ -78,7 +78,8 @@ public class SoilStateTransformerTest {
          *   2b11ff0d
          *
          * The first param is the AppSKey as hex, the second is the DevAddr as hex and the third
-         * is the soilstate payload as hex.
+         * is the observation payload as hex.
+         * FIXME: Change the AppSKey, DevAddr and payload to suit your device
          */
         int nwkAddr = hexToInt("01be7df1");
         byte[] payload = hexToBytes("40f17dbe49000200017e84fa392b11ff0d");
@@ -89,20 +90,20 @@ public class SoilStateTransformerTest {
                                 new DurableQueue.Send(
                                         nwkAddr,
                                         ByteString.fromArray(payload),
-                                        SoilStateTransformer.DATA_UP_MAC_PAYLOAD_TOPIC,
+                                        $deviceType;format="Camel"$Transformer.DATA_UP_MAC_PAYLOAD_TOPIC,
                                         DurableQueue.EmptyHeaders()),
                                 Option.empty()))
                 .via(durableQueue.flow())
                 .runWith(Sink.head(), mat);
 
-        Tuple2<SoilStateReading, Long> result = durableQueue
-                .source(SoilStateReading.DATA_UP_JSON_TOPIC)
-                .via(SoilStateReading.tailer(getSecret, mat.executionContext()))
+        Tuple2<$deviceType;format="Camel"$Reading, Long> result = durableQueue
+                .source($deviceType;format="Camel"$Reading.DATA_UP_JSON_TOPIC)
+                .via($deviceType;format="Camel"$Reading.tailer(getSecret, mat.executionContext()))
                 .runWith(Sink.head(), mat)
                 .toCompletableFuture()
                 .get(3, TimeUnit.SECONDS);
 
-        SoilStateReading reading = result._1();
+        $deviceType;format="Camel"$Reading reading = result._1();
         assertTrue(reading.getTime().isBefore(Instant.now()));
         assertEquals(nwkAddr, reading.getNwkAddr());
         assertEquals(BigDecimal.valueOf(200, 1), reading.getTemperature());
