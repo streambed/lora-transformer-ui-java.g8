@@ -19,17 +19,19 @@ import akka.stream.javadsl.Flow;
 import akka.stream.javadsl.Sink;
 import $organization;format="package"$.$deviceType;format="camel"$.transformer.$deviceType;format="Camel"$Transformer;
 import $organization;format="package"$.$deviceType;format="camel"$.ui.model.Credentials;
-import com.github.huntc.streambed.Application;
-import com.github.huntc.streambed.ApplicationContext;
-import com.github.huntc.streambed.durablequeue.DurableQueue;
-import com.github.huntc.streambed.durablequeue.chroniclequeue.ChronicleQueue;
-import com.github.huntc.streambed.durablequeue.chroniclequeue.DurableQueueProvider;
-import com.github.huntc.streambed.http.HttpServerConfig;
-import com.github.huntc.streambed.http.identity.UserIdentityService;
-import com.github.huntc.streambed.identity.Principal;
-import com.github.huntc.streambed.identity.iox.IOxSecretStore;
-import com.github.huntc.streambed.identity.iox.SecretStoreProvider;
-import com.github.huntc.streambed.tracing.jaeger.TracerConfig;
+import com.cisco.streambed.Application;
+import com.cisco.streambed.ApplicationContext;
+import com.cisco.streambed.durablequeue.DurableQueue;
+import com.cisco.streambed.durablequeue.chroniclequeue.ChronicleQueue;
+import com.cisco.streambed.durablequeue.chroniclequeue.DurableQueueProvider;
+import com.cisco.streambed.http.HttpServerConfig;
+import com.cisco.streambed.http.identity.UserIdentityService;
+import com.cisco.streambed.identity.Principal;
+import com.cisco.streambed.identity.iox.IOxSecretStore;
+import com.cisco.streambed.identity.iox.SecretStoreProvider;
+import com.cisco.streambed.storage.fs.FileSystemRawStorage;
+import com.cisco.streambed.storage.fs.RawStorageProvider;
+import com.cisco.streambed.tracing.jaeger.TracerConfig;
 import com.typesafe.config.Config;
 import io.opentracing.Tracer;
 import scala.compat.java8.FutureConverters;
@@ -43,7 +45,7 @@ import java.util.concurrent.CompletionStage;
  * This is our main entry point to the application being responsible for serving assets as well as providings the UI's
  * RESTful endpoints
  */
-public class $deviceType;format="Camel"$Server extends Application implements DurableQueueProvider, SecretStoreProvider {
+public class $deviceType;format="Camel"$Server extends Application implements DurableQueueProvider, RawStorageProvider, SecretStoreProvider {
 
     @Override
     public void main(String[] args, ApplicationContext context) {
@@ -87,6 +89,12 @@ public class $deviceType;format="Camel"$Server extends Application implements Du
     @Override
     public IOxSecretStore acquireSecretStore(Config config, Materializer mat, ActorSystem system) {
         return SecretStoreProvider.super.acquireSecretStore(config, mat, system);
+    }
+
+    // Wire in fs as our raw storage
+    @Override
+    public FileSystemRawStorage acquireRawStorage(Config config, Materializer mat, ActorSystem system) {
+        return RawStorageProvider.super.acquireRawStorage(config, mat, system);
     }
 
     // Describe the HTTP routes

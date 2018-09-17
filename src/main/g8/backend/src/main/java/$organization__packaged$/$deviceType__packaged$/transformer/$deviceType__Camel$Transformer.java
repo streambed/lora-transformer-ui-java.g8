@@ -9,11 +9,11 @@ import akka.stream.javadsl.Flow;
 import akka.stream.javadsl.Source;
 import akka.util.ByteString;
 import $organization;format="package"$.$deviceType;format="camel"$.$deviceType;format="Camel"$Reading;
-import com.github.huntc.lora.streams.Streams;
-import com.github.huntc.streambed.UuidOps;
-import com.github.huntc.streambed.durablequeue.DurableQueue;
-import com.github.huntc.streambed.durablequeue.opentracing.Headers;
-import com.github.huntc.streambed.identity.Principal;
+import com.cisco.streambed.UuidOps;
+import com.cisco.streambed.durablequeue.DurableQueue;
+import com.cisco.streambed.durablequeue.opentracing.Headers;
+import com.cisco.streambed.identity.Principal;
+import com.cisco.streambed.lora.streams.Streams;
 import io.opentracing.References;
 import io.opentracing.Scope;
 import io.opentracing.Span;
@@ -109,7 +109,7 @@ public final class $deviceType;format="Camel"$Transformer {
                                     ByteString.fromString(decryptedData)),
                             new Tuple2<>(nwkAddr, span));
                 })
-                .via(com.github.huntc.streambed.identity.streams.Streams.encrypter(mat.executionContext()))
+                .via(com.cisco.streambed.identity.streams.Streams.encrypter(mat.executionContext()))
                 .map(e -> {
                     ByteString encryptedData = e._1();
                     long key = e._2()._1();

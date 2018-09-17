@@ -16,10 +16,9 @@
         <versions.akkaHttp>10.1.3</versions.akkaHttp>
         <versions.jackson>2.9.5</versions.jackson>
         <versions.junit>4.12</versions.junit>
-        <versions.ioxLandlord>0.16.0</versions.ioxLandlord>
-        <versions.loraSdk>0.8.1</versions.loraSdk>
+        <versions.loraSdk>0.10.1</versions.loraSdk>
         <versions.scala>2.12</versions.scala>
-        <versions.streambed>0.16.0</versions.streambed>
+        <versions.streambed>0.19.3</versions.streambed>
     </properties>
 
     <version>\${project.version}</version>
@@ -36,32 +35,37 @@
             <version>\${versions.akkaHttp}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.huntc</groupId>
+            <groupId>com.cisco.streambed</groupId>
             <artifactId>chronicle-queue_\${versions.scala}</artifactId>
             <version>\${versions.streambed}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.huntc</groupId>
+            <groupId>com.cisco.streambed</groupId>
+            <artifactId>fs_\${versions.scala}</artifactId>
+            <version>\${versions.streambed}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cisco.streambed</groupId>
             <artifactId>iox-sss_\${versions.scala}</artifactId>
             <version>\${versions.streambed}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.huntc</groupId>
+            <groupId>com.cisco.streambed</groupId>
             <artifactId>jaeger-tracing_\${versions.scala}</artifactId>
             <version>\${versions.streambed}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.huntc</groupId>
+            <groupId>com.cisco.streambed</groupId>
             <artifactId>streambed-http_\${versions.scala}</artifactId>
             <version>\${versions.streambed}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.huntc</groupId>
+            <groupId>com.cisco.streambed.lora</groupId>
             <artifactId>lora-control-plane_\${versions.scala}</artifactId>
             <version>\${versions.loraSdk}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.huntc</groupId>
+            <groupId>com.cisco.streambed.lora</groupId>
             <artifactId>lora-streams_\${versions.scala}</artifactId>
             <version>\${versions.loraSdk}</version>
         </dependency>
@@ -78,7 +82,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.huntc</groupId>
+            <groupId>com.cisco.streambed</groupId>
             <artifactId>streambed-testkit_\${versions.scala}</artifactId>
             <version>\${versions.streambed}</version>
             <scope>test</scope>
@@ -95,13 +99,13 @@
                 <configuration>
                    <images>
                       <image>
-                        <name>farmco/%a:%v</name>
+                        <name>streambed/%a:%v</name>
                         <build>
                           <assembly>
                             <descriptorRef>artifact</descriptorRef>
                             <targetDir>/opt/docker/lib</targetDir>
                           </assembly>
-                          <from>farmco/iox-landlord:\${versions.ioxLandlord}</from>
+                          <from>streambed/iox-landlord:\${versions.streambed}</from>
                           <labels>
                             <cisco.info.name>$deviceType;format="word"$ui</cisco.info.name>
                           </labels>
@@ -188,9 +192,9 @@
 
     <repositories>
       <repository>
-        <id>farmco-repositories</id>
-        <name>farmco-repositories</name>
-        <url>https://farmco-repositories.bitbucket.io/jars</url>
+        <id>streambed-repositories</id>
+        <name>streambed-repositories</name>
+        <url>https://repositories.streambed.io/jars</url>
       </repository>
     </repositories>
 
