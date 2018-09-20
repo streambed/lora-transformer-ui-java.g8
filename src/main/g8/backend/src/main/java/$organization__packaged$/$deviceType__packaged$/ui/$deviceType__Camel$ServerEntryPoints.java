@@ -1,6 +1,6 @@
 package $organization;format="package"$.$deviceType;format="camel"$.ui;
 
-import com.github.huntc.streambed.ApplicationProcess;
+import com.cisco.streambed.ApplicationProcess;
 
 /**
  * Bootstraps our application and handles signals

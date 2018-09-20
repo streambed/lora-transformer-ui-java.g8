@@ -3,7 +3,7 @@ package $organization;format="package"$.$deviceType;format="camel"$.ui;
 import akka.http.javadsl.model.sse.ServerSentEvent;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import $organization;format="package"$.$deviceType;format="camel"$.$deviceType;format="Camel"$Reading;
-import com.github.huntc.lora.controlplane.EndDeviceEvents;
+import com.cisco.streambed.lora.controlplane.EndDeviceEvents;
 import spray.json.SerializationException;
 
 /**

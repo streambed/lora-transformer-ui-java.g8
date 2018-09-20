@@ -34,7 +34,6 @@
         </encoder>
     </appender>
 
-    <logger name="com.github.huntc" level="DEBUG" />
     <logger name="akka" level="INFO" />
 
     <root level="INFO">

@@ -8,9 +8,9 @@ import akka.stream.javadsl.Source;
 import akka.testkit.javadsl.TestKit;
 import akka.util.ByteString;
 import $organization;format="package"$.$deviceType;format="camel"$.$deviceType;format="Camel"$Reading;
-import com.github.huntc.streambed.durablequeue.DurableQueue;
-import com.github.huntc.streambed.identity.Principal;
-import com.github.huntc.streambed.testkit.durablequeue.InMemoryQueue\$;
+import com.cisco.streambed.durablequeue.DurableQueue;
+import com.cisco.streambed.identity.Principal;
+import com.cisco.streambed.testkit.durablequeue.InMemoryQueue\$;
 import io.opentracing.noop.NoopTracer;
 import io.opentracing.noop.NoopTracerFactory;
 import org.junit.After;
@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.function.Function;
 
-import static com.github.huntc.streambed.HexString.*;
+import static com.cisco.streambed.HexString.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -72,7 +72,7 @@ public class $deviceType;format="Camel"$TransformerTest {
          * Enqueue a LoRaWAN payload as a Network Server would. Uses the packet encoder utility to obtain
          * these values i.e.:
          *
-         * docker run --rm farmco/lora-packet-encoder:0.9.0 \
+         * docker run --rm streambed/lora-packet-encoder:0.10.1 \
          *   2B7E151628AED2A6ABF7158809CF4F3C \
          *   49be7df1 \
          *   2b11ff0d
