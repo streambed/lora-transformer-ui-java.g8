@@ -1,0 +1,31 @@
+version: 2
+jobs:
+  build-backend:
+    working_directory: ~/project
+    docker:
+      - image: circleci/openjdk:8-jdk-node-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          key: sbt-cache-2
+      - run:
+          name: Compile & Test
+          command: |
+            sbt -mem 1500 \
+              clean \
+              compile \
+              g8 && \
+            cd target/g8/backend && \
+            mvn test
+      - save_cache:
+          key: sbt-cache-2
+          paths:
+          - "~/.ivy2/cache"
+          - "~/.sbt"
+          - "~/.m2"
+
+workflows:
+  version: 2
+  build:
+    jobs:
+    - build-backend

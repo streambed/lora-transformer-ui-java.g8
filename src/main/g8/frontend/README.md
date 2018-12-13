@@ -39,6 +39,43 @@ curl \
 
 A front end is typically interested in the following end device events:
 
+### SSE type: `BatteryLevelUpdated`
+
+```json
+{
+  "nwkAddr": 1,
+  "voltage": 1234,
+  "time": "1970-01-01T00:00:00Z",
+  "type": "BatteryLevelUpdated"
+}
+```
+
+### SSE type: `NameUpdated`
+
+```json
+{
+  "nwkAddr": 1,
+  "name": "my device",
+  "type": "NameUpdated"
+}
+```
+
+### SSE type: `NwkAddrRemoved`
+
+```json
+{"nwkAddr":1,"type":"NwkAddrRemoved"}
+```
+
+### SSE type: `NwkAddrUpdated`
+
+```json
+{
+  "nwkAddr": 1,
+  "devEUI": 1311768467294899695,
+  "type": "NwkAddrUpdated"
+}
+```
+
 ### SSE type: `PositionUpdated`
 
 ```json
@@ -52,14 +89,6 @@ A front end is typically interested in the following end device events:
   },
   "type": "PositionUpdated"
 }
-```
-
-and
-
-### SSE type: `NwkAddrRemoved`
-
-```json
-{"nwkAddr":1,"type":"NwkAddrRemoved"}
 ```
 
 ### Subscribe to observations
