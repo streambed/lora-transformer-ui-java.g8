@@ -13,12 +13,12 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.version>0.1.0-SNAPSHOT</project.version>
         <versions.akka>2.5.19</versions.akka>
-        <versions.akkaHttp>10.1.5</versions.akkaHttp>
+        <versions.akkaHttp>10.1.6</versions.akkaHttp>
         <versions.jackson>2.9.5</versions.jackson>
         <versions.junit>4.12</versions.junit>
-        <versions.loraSdk>0.11.0</versions.loraSdk>
+        <versions.loraSdk>0.12.0</versions.loraSdk>
         <versions.scala>2.12</versions.scala>
-        <versions.streambed>0.24.4</versions.streambed>
+        <versions.streambed>0.24.8</versions.streambed>
     </properties>
 
     <version>\${project.version}</version>

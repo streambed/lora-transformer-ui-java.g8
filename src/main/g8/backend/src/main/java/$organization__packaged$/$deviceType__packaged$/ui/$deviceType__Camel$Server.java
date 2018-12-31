@@ -4,7 +4,6 @@ import akka.NotUsed;
 import akka.actor.ActorSystem;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
-import akka.http.javadsl.ServerBinding;
 import akka.http.javadsl.marshallers.jackson.Jackson;
 import akka.http.javadsl.marshalling.sse.EventStreamMarshalling;
 import akka.http.javadsl.model.HttpRequest;
@@ -60,11 +59,10 @@ public class $deviceType;format="Camel"$Server extends Application implements Du
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = routes.createMainRoute(context).flow(system, mat);
 
         HttpServerConfig
-                .bindAndHandle(context, routeFlow)
-                .thenApply(serverBinding -> {
-                    log.info("Server listening on {}", serverBinding.stream().map(ServerBinding::localAddress).toArray());
-
-                    return serverBinding;
+                .bindAndHandle(routeFlow, context)
+                .thenApply(serverBindings -> {
+                    serverBindings.forEach(b -> log.info("Server listening on {}", b));
+                    return serverBindings;
                 })
                 .exceptionally(failure -> {
                     log.error(failure, "Bind failed, exiting");
