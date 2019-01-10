@@ -6,13 +6,16 @@ import com.cisco.streambed.ApplicationProcess;
  * Bootstraps our application and handles signals
  */
 public class $deviceType;format="Camel"$ServerEntryPoints {
-    private static ApplicationProcess applicationProcess = new ApplicationProcess(new $deviceType;format="Camel"$Server());
+    private static ApplicationProcess applicationProcess = null;
 
     public static void main(String[] args) {
+        applicationProcess = new ApplicationProcess(new $deviceType;format="Camel"$Server());
         applicationProcess.main(args);
     }
 
     public static void trap(int signal) {
-        applicationProcess.trap(signal);
+        if (applicationProcess != null) {
+            applicationProcess.trap(signal);
+        }
     }
 }
